@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Countdowns</string>
+    <string name="action_settings">Settings</string>
+    <string name="task_desc">What will you name your task?</string>
+    <string name="task_date">When is your task due?</string>
+    <string name="pick_time">Set Time</string>
+    <string name="pick_date">Set Date</string>
+    <string name="task_desc_hint">Task description</string>
+    <string name="add_task">Add Task</string>
+    <string name="title_activity_create_task">Create Task</string>
+</resources>
