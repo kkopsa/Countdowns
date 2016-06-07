@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class TasksActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -34,10 +36,11 @@ public class TasksActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        String myDataset [] = {"here", "we", "go"};
+        TaskListSingleton taskListSingleton = TaskListSingleton.getInstance();
+        ArrayList<Task> tasks = TaskListSingleton.getTasks();
 
         // specify an adapter (see also next example)
-        mAdapter = new TasksAdapter(myDataset);
+        mAdapter = new TasksAdapter(tasks);
         mRecyclerView.setAdapter(mAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -70,6 +73,18 @@ public class TasksActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        TaskListSingleton taskListSingleton = TaskListSingleton.getInstance();
+        ArrayList<Task> tasks = TaskListSingleton.getTasks();
+
+        // specify an adapter (see also next example)
+        mAdapter = new TasksAdapter(tasks);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     /** Called when the user clicks the send button */

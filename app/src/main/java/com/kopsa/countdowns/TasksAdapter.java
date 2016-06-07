@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
-    private String[] mDataset;
+    //private String[] mDataset;
+    private ArrayList<Task> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -23,7 +28,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TasksAdapter(String[] myDataset) {
+    public TasksAdapter(ArrayList<Task> myDataset) {
         mDataset = myDataset;
     }
 
@@ -46,13 +51,17 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         // - replace the contents of the view with that element
 
         //holder.mCardView.setText(mDataset[position]);
+        TextView textViewDesc = (TextView) holder.mCardView.findViewById(R.id.task_desc_text_view);
+        textViewDesc.setText(mDataset.get(position).getmDesc());
+        TextView textViewCount = (TextView) holder.mCardView.findViewById(R.id.countdown_text_view);
+        textViewCount.setText(String.valueOf(mDataset.get(position).getmDate()));
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
 
