@@ -23,7 +23,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private static final String TAG = CreateTaskActivity.class.getSimpleName();
 
-    private long mTaskDate;
+    private Date mTaskDate;
     private String mTaskDesc;
     private static int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -39,8 +39,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // set datetime
                 Calendar cal = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute);
-                Date date = cal.getTime();
-                mTaskDate = date.getTime();
+                mTaskDate = cal.getTime();
 
                 // set task description
                 EditText et = (EditText) findViewById(R.id.task_desc);

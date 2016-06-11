@@ -8,10 +8,10 @@ import java.util.Date;
 public class Task {
     private String mId;
     private String mDesc;
-    private long mDate;
+    private Date mDate;
     private boolean mCompleted;
 
-    public Task(String mId, String mDesc, long mDate) {
+    public Task(String mId, String mDesc, Date mDate) {
         this.mId = mId;
         this.mDesc = mDesc;
         this.mDate = mDate;
@@ -26,7 +26,7 @@ public class Task {
         return mDesc;
     }
 
-    public long getmDate() {
+    public Date getmDate() {
         return mDate;
     }
 

@@ -2,6 +2,8 @@ package com.kopsa.countdowns;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,17 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
     //private String[] mDataset;
     private ArrayList<Task> mDataset;
+
+    private static final String TAG = TasksAdapter.class.getSimpleName();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -53,9 +62,32 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         //holder.mCardView.setText(mDataset[position]);
         TextView textViewDesc = (TextView) holder.mCardView.findViewById(R.id.task_desc_text_view);
         textViewDesc.setText(mDataset.get(position).getmDesc());
-        TextView textViewCount = (TextView) holder.mCardView.findViewById(R.id.countdown_text_view);
-        textViewCount.setText(String.valueOf(mDataset.get(position).getmDate()));
 
+        TextView textViewCountdown = (TextView) holder.mCardView.findViewById(R.id.countdown_text_view);
+        Date dueDate = mDataset.get(position).getmDate();
+        String countdown = getTimeRemaining(dueDate);
+        textViewCountdown.setText(countdown);
+
+        TextView dayOfWeek, dayOfMonth, monthAbbrev;
+        dayOfWeek = (TextView) holder.mCardView.findViewById(R.id.day_of_week);
+        dayOfMonth = (TextView) holder.mCardView.findViewById(R.id.day_of_month);
+        monthAbbrev = (TextView) holder.mCardView.findViewById(R.id.month_abbrev);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(dueDate.getTime());
+
+        dayOfWeek.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
+        dayOfMonth.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+        monthAbbrev.setText(cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH));
+
+
+    }
+
+    private String getTimeRemaining(Date dueDate) {
+        Date date = new Date();
+        long timeRemaining = dueDate.getTime() - date.getTime();
+        int days = (int) (timeRemaining / (1000*60*60*24));
+        return String.valueOf(days) + " days";
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -23,30 +23,30 @@
             android:background="@color/cardview_dark_background">
 
             <TextView
+                android:id="@+id/day_of_week"
                 style="@style/TextAppearance.AppCompat.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:textStyle="bold"
-                android:text="FRI"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/day_of_month"
                 style="@style/TextAppearance.AppCompat.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:textSize="30sp"
-                android:text="27"/>
+                android:textSize="30sp" />
 
             <TextView
+                android:id="@+id/month_abbrev"
                 style="@style/TextAppearance.AppCompat.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="APR"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
