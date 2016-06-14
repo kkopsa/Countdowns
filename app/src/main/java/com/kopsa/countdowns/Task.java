@@ -1,36 +1,25 @@
 package com.kopsa.countdowns;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by kkopsa on 5/27/16.
  */
 public class Task {
-    private String mId;
     private String mDesc;
-    private Date mDate;
-    private boolean mCompleted;
+    private Calendar mDate;
 
-    public Task(String mId, String mDesc, Date mDate) {
-        this.mId = mId;
+    public Task(String mDesc, Calendar mDate) {
         this.mDesc = mDesc;
         this.mDate = mDate;
-        this.mCompleted = false;
     }
 
-    public String getmId() {
-        return mId;
-    }
-
-    public String getmDesc() {
+    public String getDesc() {
         return mDesc;
     }
 
-    public Date getmDate() {
+    public Calendar getDate() {
         return mDate;
-    }
-
-    public boolean ismCompleted() {
-        return mCompleted;
     }
 }

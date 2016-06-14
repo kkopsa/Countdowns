@@ -23,14 +23,18 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private static final String TAG = CreateTaskActivity.class.getSimpleName();
 
-    private Date mTaskDate;
+    private Calendar mTaskDate;
     private String mTaskDesc;
     private static int mYear, mMonth, mDay, mHour, mMinute;
+    private boolean mTimeIsSet = false;
+    private boolean mDateIsSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
+
+        mTaskDate = Calendar.getInstance();
 
         final Button saveButton = (Button) findViewById(R.id.add_task);
         assert saveButton != null;
@@ -38,14 +42,13 @@ public class CreateTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // set datetime
-                Calendar cal = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute);
-                mTaskDate = cal.getTime();
+                mTaskDate.set(mYear, mMonth, mDay, mHour, mMinute);
 
                 // set task description
                 EditText et = (EditText) findViewById(R.id.task_desc);
                 mTaskDesc = et.getText().toString();
 
-                Task task = new Task("001", mTaskDesc, mTaskDate);
+                Task task = new Task(mTaskDesc, mTaskDate);
                 TaskListSingleton taskListSingleton = TaskListSingleton.getInstance();
                 TaskListSingleton.addTask(task);
 
