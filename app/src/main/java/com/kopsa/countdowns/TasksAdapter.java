@@ -2,27 +2,25 @@ package com.kopsa.countdowns;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
-    //private String[] mDataset;
-    private ArrayList<Task> mDataset;
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
-    private static final String TAG = TasksAdapter.class.getSimpleName();
+    private ArrayList<Task> mTaskList;
+
+    @Override
+    public void onItemDismiss(int position) {
+        mTaskList.remove(position);
+        notifyItemRemoved(position);
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -38,7 +36,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public TasksAdapter(ArrayList<Task> myDataset) {
-        mDataset = myDataset;
+        mTaskList = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
@@ -59,12 +57,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        //holder.mCardView.setText(mDataset[position]);
+        //holder.mCardView.setText(mTaskList[position]);
         TextView textViewDesc = (TextView) holder.mCardView.findViewById(R.id.task_desc_text_view);
-        textViewDesc.setText(mDataset.get(position).getmDesc());
+        textViewDesc.setText(mTaskList.get(position).getmDesc());
 
         TextView textViewCountdown = (TextView) holder.mCardView.findViewById(R.id.countdown_text_view);
-        Date dueDate = mDataset.get(position).getmDate();
+        Date dueDate = mTaskList.get(position).getmDate();
         String countdown = getTimeRemaining(dueDate);
         textViewCountdown.setText(countdown);
 
@@ -93,7 +91,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mTaskList.size();
     }
 }
 
