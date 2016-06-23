@@ -1,6 +1,8 @@
 package com.kopsa.countdowns;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by kkopsa on 6/7/16.
@@ -26,5 +28,9 @@ public class TaskListSingleton {
 
     public static void addTask(Task task) {
         tasks.add(task);
+    }
+
+    public static void sort() {
+        Collections.sort(tasks);
     }
 }

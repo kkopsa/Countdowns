@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by kkopsa on 5/27/16.
  */
-public class Task {
+public class Task implements Comparable<Task> {
     private String mDesc;
     private Calendar mDate;
 
@@ -21,5 +21,13 @@ public class Task {
 
     public Calendar getDate() {
         return mDate;
+    }
+
+    @Override
+    public int compareTo(Task another) {
+        if (mDate.getTimeInMillis() > another.getDate().getTimeInMillis())
+            return 1;
+        else
+            return -1;
     }
 }

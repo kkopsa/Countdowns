@@ -37,14 +37,15 @@ public class TasksActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        TaskListSingleton taskListSingleton = TaskListSingleton.getInstance();
+        TaskListSingleton.getInstance();
+        TaskListSingleton.sort();
         ArrayList<Task> tasks = TaskListSingleton.getTasks();
 
         // specify an adapter (see also next example)
         mAdapter = new TasksAdapter(tasks);
         mRecyclerView.setAdapter(mAdapter);
 
-        // TODO: update countdown each second
+        // TODO: refactor update countdown each second
         Thread t = new Thread() {
 
             @Override
@@ -108,7 +109,8 @@ public class TasksActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        TaskListSingleton taskListSingleton = TaskListSingleton.getInstance();
+        TaskListSingleton.getInstance();
+        TaskListSingleton.sort();
         ArrayList<Task> tasks = TaskListSingleton.getTasks();
 
         // specify an adapter (see also next example)
