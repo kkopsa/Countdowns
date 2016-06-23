@@ -18,7 +18,7 @@
         <!-- Date View -->
         <LinearLayout
             android:layout_width="85dp"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:orientation="vertical"
             android:background="@color/cardview_dark_background">
 
@@ -28,17 +28,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="2.5" />
 
             <TextView
                 android:id="@+id/day_of_month"
                 style="@style/TextAppearance.AppCompat.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="30sp" />
+                android:textSize="24sp"
+                android:layout_weight="5" />
 
             <TextView
                 android:id="@+id/month_abbrev"
@@ -46,7 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="2.5" />
 
         </LinearLayout>
 
@@ -58,21 +60,23 @@
 
             <TextView
                 android:id="@+id/task_desc_text_view"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:text="Senior project due"/>
 
             <TextView
                 android:id="@+id/countdown_text_view"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="5dp"
-                android:textSize="24sp"
+                android:textColor="#000000"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
-                android:text="14 days 12 hours 57 minutes 38 seconds"/>
+                android:text="14 days 12 hours 57 minutes 38 seconds" />
 
         </LinearLayout>
 

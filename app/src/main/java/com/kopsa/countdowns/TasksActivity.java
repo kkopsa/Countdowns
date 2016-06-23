@@ -44,6 +44,30 @@ public class TasksActivity extends AppCompatActivity {
         mAdapter = new TasksAdapter(tasks);
         mRecyclerView.setAdapter(mAdapter);
 
+        // TODO: update countdown each second
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int itemRangeStart = 0;
+                                mAdapter.notifyItemRangeChanged(itemRangeStart, mAdapter.getItemCount());
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback((ItemTouchHelperAdapter) mAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(mRecyclerView);
