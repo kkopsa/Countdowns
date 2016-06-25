@@ -21,36 +21,53 @@
         android:layout_weight="25"
         android:textSize="24sp" />
 
-    <ImageButton
+    <Button
         android:layout_marginBottom="-5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/access_date"
+        android:drawableRight="@drawable/access_date"
+        android:text="Pick Date"
         android:id="@+id/pick_date"
         android:layout_gravity="center_horizontal"
         android:layout_weight="20"
         android:onClick="showDatePickerDialog"
         android:contentDescription="@string/pick_date" />
 
-    <ImageButton
+    <Button
         android:layout_marginTop="-5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/access_time"
+        android:drawableRight="@drawable/access_time"
+        android:text="Pick Time"
         android:id="@+id/pick_time"
         android:layout_gravity="center_horizontal"
         android:layout_weight="20"
         android:onClick="showTimePickerDialog"
         android:contentDescription="@string/pick_time" />
 
-    <ImageButton
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
-        android:id="@+id/add_task"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="25"
-        android:contentDescription="@string/add_task" />
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Cancel"
+            android:id="@+id/cancel_button"
+            android:layout_weight="25" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableEnd="@android:drawable/ic_input_add"
+            android:text="Save Task"
+            android:id="@+id/add_task"
+            android:layout_weight="25"
+            android:contentDescription="@string/add_task" />
+    </LinearLayout>
 
     <Space
         android:layout_width="20dp"

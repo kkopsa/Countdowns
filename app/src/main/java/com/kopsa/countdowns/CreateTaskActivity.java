@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
@@ -28,6 +29,9 @@ public class CreateTaskActivity extends AppCompatActivity {
     private static Calendar mTaskDate;
     private String mTaskDesc;
 
+    private static Button dateButton;
+    private static Button timeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,12 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         mTaskDate = Calendar.getInstance();
 
-        final ImageButton saveButton = (ImageButton) findViewById(R.id.add_task);
+        dateButton = (Button) findViewById(R.id.pick_date);
+        timeButton = (Button) findViewById(R.id.pick_time);
+
+
+        final Button saveButton = (Button) findViewById(R.id.add_task);
+        final Button cancelButton = (Button) findViewById(R.id.cancel_button);
 
         assert saveButton != null;
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +60,15 @@ public class CreateTaskActivity extends AppCompatActivity {
                 TaskListSingleton.addTask(task);
 
                 setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+
+        assert cancelButton != null;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
@@ -85,6 +103,14 @@ public class CreateTaskActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             mTaskDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
             mTaskDate.set(Calendar.MINUTE, minute);
+            String time = String.valueOf(hourOfDay);
+            if (minute < 10)
+                time += ":0";
+            else
+                time += ":";
+            time += String.valueOf(minute);
+            time += " " + mTaskDate.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH);
+            timeButton.setText(time);
         }
     }
 
@@ -107,6 +133,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             mTaskDate.set(year, month, day);
+            String date = mTaskDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+            date += " " + String.valueOf(day);
+            date += ", " + String.valueOf(year);
+            dateButton.setText(date);
         }
     }
 }
