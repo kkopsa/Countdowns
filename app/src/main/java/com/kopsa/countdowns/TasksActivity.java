@@ -63,6 +63,7 @@ public class TasksActivity extends AppCompatActivity {
                         });
                     }
                 } catch (InterruptedException e) {
+
                 }
             }
         };

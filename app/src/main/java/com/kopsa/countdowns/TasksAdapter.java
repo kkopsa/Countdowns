@@ -20,8 +20,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
     @Override
     public void onItemDismiss(int position) {
-        mTaskList.remove(position);
-        notifyItemRemoved(position);
+        if (mTaskList.size() > 0) {
+            mTaskList.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     // Provide a reference to the views for each data item

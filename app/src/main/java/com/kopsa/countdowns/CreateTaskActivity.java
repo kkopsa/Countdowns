@@ -103,11 +103,20 @@ public class CreateTaskActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             mTaskDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
             mTaskDate.set(Calendar.MINUTE, minute);
-            String time = String.valueOf(hourOfDay);
-            if (minute < 10)
+            String time;
+            if (hourOfDay > 12) {
+                time = String.valueOf(hourOfDay - 12);
+            }
+            else {
+                time = String.valueOf(hourOfDay);
+            }
+
+            if (minute < 10) {
                 time += ":0";
-            else
+            }
+            else {
                 time += ":";
+            }
             time += String.valueOf(minute);
             time += " " + mTaskDate.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH);
             timeButton.setText(time);
