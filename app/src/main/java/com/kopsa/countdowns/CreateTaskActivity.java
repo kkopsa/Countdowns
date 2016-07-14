@@ -7,19 +7,19 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity {
@@ -37,41 +37,45 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
         mTaskDate = Calendar.getInstance();
 
         dateButton = (Button) findViewById(R.id.pick_date);
         timeButton = (Button) findViewById(R.id.pick_time);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        final MenuItem menuItem = menu.add(Menu.NONE, 1000, Menu.NONE, "SAVE");
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        return true;
+    }
 
-        final Button saveButton = (Button) findViewById(R.id.add_task);
-        final Button cancelButton = (Button) findViewById(R.id.cancel_button);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        assert saveButton != null;
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // set task description
-                EditText et = (EditText) findViewById(R.id.task_desc);
-                assert et != null;
-                mTaskDesc = et.getText().toString();
+        //noinspection SimplifiableIfStatement
+        if (id == 1000) {
+            // set task description
+            EditText et = (EditText) findViewById(R.id.task_desc);
+            assert et != null;
+            mTaskDesc = et.getText().toString();
 
-                Task task = new Task(mTaskDesc, mTaskDate);
-                TaskListSingleton.getInstance();
-                TaskListSingleton.addTask(task);
+            Task task = new Task(mTaskDesc, mTaskDate);
+            TaskListSingleton.getInstance();
+            TaskListSingleton.addTask(task);
 
-                setResult(Activity.RESULT_OK);
-                finish();
-            }
-        });
+            setResult(Activity.RESULT_OK);
+            finish();
+            return true;
+        }
 
-        assert cancelButton != null;
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(Activity.RESULT_CANCELED);
-                finish();
-            }
-        });
+        return super.onOptionsItemSelected(item);
     }
 
     public void showDatePickerDialog(View view) {

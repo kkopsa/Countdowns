@@ -17,10 +17,11 @@
 
         <!-- Date View -->
         <LinearLayout
-            android:layout_width="85dp"
+            android:layout_width="65dp"
             android:layout_height="65dp"
             android:orientation="vertical"
-            android:background="@color/cardview_dark_background">
+            android:background="@color/cardview_dark_background"
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/day_of_week"
@@ -54,15 +55,16 @@
 
         <!-- Name and Countdown View -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_weight="25">
 
             <TextView
                 android:id="@+id/task_desc_text_view"
                 android:textColor="#000000"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="29dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
                 android:textSize="24sp"
@@ -79,6 +81,12 @@
                 android:text="14 days 12 hours 57 minutes 38 seconds" />
 
         </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

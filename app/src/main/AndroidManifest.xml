@@ -22,6 +22,7 @@
         <activity
             android:name=".CreateTaskActivity"
             android:label="@string/title_activity_create_task"
+            android:windowSoftInputMode="stateVisible"
             android:parentActivityName="com.kopsa.countdowns.TasksActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
