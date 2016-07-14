@@ -17,29 +17,34 @@
         android:hint="@string/task_desc"
         android:imeOptions="actionDone"
         android:inputType="textShortMessage"
-        android:layout_margin="5dp"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="12.5dp" />
 
-    <Button style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_marginBottom="-5dp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/access_date"
-        android:text="Pick Date"
-        android:id="@+id/pick_date"
-        android:layout_gravity="center_horizontal"
-        android:onClick="showDatePickerDialog"
-        android:contentDescription="@string/pick_date" />
+        android:layout_height="wrap_content">
 
-    <Button style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_marginTop="-5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/access_time"
-        android:text="Pick Time"
-        android:id="@+id/pick_time"
-        android:layout_gravity="center_horizontal"
-        android:onClick="showTimePickerDialog"
-        android:contentDescription="@string/pick_time" />
+        <Button style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/access_date"
+            android:id="@+id/pick_date"
+            android:textSize="16sp"
+            android:onClick="showDatePickerDialog"
+            android:contentDescription="@string/pick_date" />
+
+        <Button style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/access_time"
+            android:id="@+id/pick_time"
+            android:textSize="16sp"
+            android:onClick="showTimePickerDialog"
+            android:contentDescription="@string/pick_time" />
+
+    </LinearLayout>
 
 </LinearLayout>

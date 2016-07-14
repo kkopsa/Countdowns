@@ -1,8 +1,8 @@
 package com.kopsa.countdowns;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
@@ -69,6 +67,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         Calendar dueDate = mTaskList.get(position).getDate();
         String countdown = getTimeRemaining(dueDate);
         textViewCountdown.setText(countdown);
+        if (dueDate.before(Calendar.getInstance()))
+            textViewCountdown.setTextColor(Color.RED);
 
         TextView dayOfWeek, dayOfMonth, monthAbbrev;
         dayOfWeek = (TextView) holder.mCardView.findViewById(R.id.day_of_week);
@@ -91,9 +91,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         long minutes = timeRemaining / (1000*60);
         timeRemaining -= 1000*60*minutes;
         long seconds = timeRemaining / 1000;
+
         return String.valueOf(days) + " days " + String.valueOf(hours) + " hours "
                 + String.valueOf(minutes) + " minutes " + String.valueOf(seconds) + " seconds";
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

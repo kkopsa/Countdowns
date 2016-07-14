@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -43,6 +44,12 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         dateButton = (Button) findViewById(R.id.pick_date);
         timeButton = (Button) findViewById(R.id.pick_time);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.US);
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+
+        dateButton.setText(simpleDateFormat.format(mTaskDate.getTime()));
+        timeButton.setText(simpleTimeFormat.format(mTaskDate.getTime()));
     }
 
     @Override
@@ -110,6 +117,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             String time;
             if (hourOfDay > 12) {
                 time = String.valueOf(hourOfDay - 12);
+            }
+            else if (hourOfDay == 0) {
+                time = String.valueOf(hourOfDay + 12);
             }
             else {
                 time = String.valueOf(hourOfDay);
