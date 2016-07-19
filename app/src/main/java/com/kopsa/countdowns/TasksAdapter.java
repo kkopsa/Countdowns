@@ -67,8 +67,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         Calendar dueDate = mTaskList.get(position).getDate();
         String countdown = getTimeRemaining(dueDate);
         textViewCountdown.setText(countdown);
+
         if (dueDate.before(Calendar.getInstance()))
             textViewCountdown.setTextColor(Color.RED);
+        else
+            textViewCountdown.setTextColor(Color.BLACK);
 
         TextView dayOfWeek, dayOfMonth, monthAbbrev;
         dayOfWeek = (TextView) holder.mCardView.findViewById(R.id.day_of_week);
