@@ -41,6 +41,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         mTaskDate = Calendar.getInstance();
+        mTaskDate.set(Calendar.SECOND, 0);
 
         dateButton = (Button) findViewById(R.id.pick_date);
         timeButton = (Button) findViewById(R.id.pick_time);
@@ -160,6 +161,8 @@ public class CreateTaskActivity extends AppCompatActivity {
             date += " " + String.valueOf(day);
             date += ", " + String.valueOf(year);
             dateButton.setText(date);
+
+            //TODO: show time picker automatically after date set
         }
     }
 }

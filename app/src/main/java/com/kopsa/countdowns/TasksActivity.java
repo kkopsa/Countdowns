@@ -2,15 +2,16 @@ package com.kopsa.countdowns;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -45,30 +46,16 @@ public class TasksActivity extends AppCompatActivity {
         mAdapter = new TasksAdapter(tasks);
         mRecyclerView.setAdapter(mAdapter);
 
-        // TODO: refactor update countdown each second
-        Thread t = new Thread() {
+        new CountDownTimer(999999, 1000) {
 
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int itemRangeStart = 0;
-                                mAdapter.notifyItemRangeChanged(itemRangeStart, mAdapter.getItemCount());
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-
-                }
+            public void onTick(long millisUntilFinished) {
+                int itemRangeStart = 0;
+                mAdapter.notifyItemRangeChanged(itemRangeStart, mAdapter.getItemCount());
+                mAdapter.notifyDataSetChanged();
             }
-        };
 
-        t.start();
+            public void onFinish() {}
+        }.start();
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback((ItemTouchHelperAdapter) mAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
