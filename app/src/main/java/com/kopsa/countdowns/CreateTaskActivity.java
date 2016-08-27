@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +80,19 @@ public class CreateTaskActivity extends AppCompatActivity {
             Task task = new Task(mTaskDesc, mTaskDate);
             TaskListSingleton.getInstance();
             TaskListSingleton.addTask(task);
+
+            //TODO: find out if this is right place for db instantiation
+            TasksDbHelper tasksDbHelper = new TasksDbHelper(getBaseContext());
+
+            SQLiteDatabase db = tasksDbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(TasksContract.Task.COLUMN_NAME_DESC, mTaskDesc);
+            values.put(TasksContract.Task.COLUMN_NAME_DUE_DATE, mTaskDate.getTimeInMillis());
+
+            long newRowId = db.insert(TasksContract.Task.TABLE_NAME, null, values);
+
+            Log.d(TAG, String.valueOf(newRowId));
 
             setResult(Activity.RESULT_OK);
             finish();
