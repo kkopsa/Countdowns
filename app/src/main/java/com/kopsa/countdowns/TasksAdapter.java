@@ -61,10 +61,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         //holder.mCardView.setText(mTaskList[position]);
         TextView textViewDesc = (TextView) holder.mCardView.findViewById(R.id.task_desc_text_view);
-        textViewDesc.setText(mTaskList.get(position).getDesc());
+        textViewDesc.setText(mTaskList.get(position).getDescription());
 
         TextView textViewCountdown = (TextView) holder.mCardView.findViewById(R.id.countdown_text_view);
-        Calendar dueDate = mTaskList.get(position).getDate();
+        Calendar dueDate = mTaskList.get(position).getDueDate();
         String countdown = getTimeRemaining(dueDate);
         textViewCountdown.setText(countdown);
 
