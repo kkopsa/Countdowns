@@ -7,4 +7,5 @@
     <string name="pick_date">Set Date</string>
     <string name="add_task">Add Task</string>
     <string name="title_activity_create_task">Create Task</string>
+    <string name="test_test_string">Senior project due</string>
 </resources>

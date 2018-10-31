@@ -29,8 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold"
-                android:layout_weight="2.5" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_of_month"
@@ -68,7 +67,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
                 android:textSize="24sp"
-                android:text="Senior project due"/>
+                android:text="@string/test_test_string"/>
 
             <TextView
                 android:id="@+id/countdown_text_view"
@@ -89,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_marginRight="5dp" />
+            android:layout_marginEnd="5dp" />
 
     </LinearLayout>
 

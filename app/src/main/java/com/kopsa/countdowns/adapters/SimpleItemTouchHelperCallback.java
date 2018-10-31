@@ -1,4 +1,4 @@
-package com.kopsa.countdowns;
+package com.kopsa.countdowns.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -29,5 +29,11 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+    }
+
+    public interface ItemTouchHelperAdapter {
+
+        void onItemDismiss(int position);
+
     }
 }

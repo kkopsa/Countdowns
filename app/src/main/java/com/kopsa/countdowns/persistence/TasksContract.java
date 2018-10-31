@@ -1,4 +1,4 @@
-package com.kopsa.countdowns;
+package com.kopsa.countdowns.persistence;
 
 import android.provider.BaseColumns;
 
@@ -7,7 +7,8 @@ import android.provider.BaseColumns;
  */
 public class TasksContract {
 
-    private TasksContract() {}
+    private TasksContract() {
+    }
 
     public static class Task implements BaseColumns {
         public static final String TABLE_NAME = "task";

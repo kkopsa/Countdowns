@@ -1,4 +1,4 @@
-package com.kopsa.countdowns;
+package com.kopsa.countdowns.activities;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -22,19 +21,25 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.kopsa.countdowns.R;
+import com.kopsa.countdowns.models.Task;
+import com.kopsa.countdowns.persistence.TasksContract;
+import com.kopsa.countdowns.persistence.TasksDbHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateTaskActivity extends AppCompatActivity {
+public class CreateTaskActivity extends AppCompatActivity
+        implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    private static final String TAG = CreateTaskActivity.class.getSimpleName();
+    private final String TAG = CreateTaskActivity.class.getSimpleName();
 
-    private static Calendar mTaskDate;
+    private Calendar mTaskDate;
     private String mTaskDesc;
 
-    private static Button dateButton;
-    private static Button timeButton;
+    private Button dateButton;
+    private Button timeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,8 @@ public class CreateTaskActivity extends AppCompatActivity {
         mTaskDate = Calendar.getInstance();
         mTaskDate.set(Calendar.SECOND, 0);
 
-        dateButton = (Button) findViewById(R.id.pick_date);
-        timeButton = (Button) findViewById(R.id.pick_time);
+        dateButton = findViewById(R.id.pick_date);
+        timeButton = findViewById(R.id.pick_time);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.US);
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("h:mm a", Locale.US);
@@ -59,7 +64,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuItem menuItem = menu.add(Menu.NONE, 1000, Menu.NONE, "SAVE");
-        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
 
@@ -73,13 +78,12 @@ public class CreateTaskActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == 1000) {
             // set task description
-            EditText et = (EditText) findViewById(R.id.task_desc);
+            EditText et = findViewById(R.id.task_desc);
             assert et != null;
             mTaskDesc = et.getText().toString();
 
             Task task = new Task(mTaskDesc, mTaskDate);
-            TaskListSingleton.getInstance();
-            TaskListSingleton.addTask(task);
+            TasksActivity.mTasksList.add(task);
 
             //TODO: find out if this is right place for db instantiation
             TasksDbHelper tasksDbHelper = new TasksDbHelper(getBaseContext());
@@ -112,8 +116,50 @@ public class CreateTaskActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
-    public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
+    public void setTimeButton(String time) {
+        timeButton.setText(time);
+    }
+
+    public void setDateButton(String date) {
+        dateButton.setText(date);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        // Do something with the date chosen by the user
+        mTaskDate.set(year, month, day);
+        String date = mTaskDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+        date += " " + String.valueOf(day);
+        date += ", " + String.valueOf(year);
+        setDateButton(date);
+
+        //TODO: show time picker automatically after date set
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mTaskDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        mTaskDate.set(Calendar.MINUTE, minute);
+        String time;
+        if (hourOfDay > 12) {
+            time = String.valueOf(hourOfDay - 12);
+        } else if (hourOfDay == 0) {
+            time = String.valueOf(hourOfDay + 12);
+        } else {
+            time = String.valueOf(hourOfDay);
+        }
+
+        if (minute < 10) {
+            time += ":0";
+        } else {
+            time += ":";
+        }
+        time += String.valueOf(minute);
+        time += " " + mTaskDate.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH);
+        setTimeButton(time);
+    }
+
+    public static class TimePickerFragment extends DialogFragment {
 
         @NonNull
         @Override
@@ -124,38 +170,14 @@ public class CreateTaskActivity extends AppCompatActivity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
 
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mTaskDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            mTaskDate.set(Calendar.MINUTE, minute);
-            String time;
-            if (hourOfDay > 12) {
-                time = String.valueOf(hourOfDay - 12);
-            }
-            else if (hourOfDay == 0) {
-                time = String.valueOf(hourOfDay + 12);
-            }
-            else {
-                time = String.valueOf(hourOfDay);
-            }
 
-            if (minute < 10) {
-                time += ":0";
-            }
-            else {
-                time += ":";
-            }
-            time += String.valueOf(minute);
-            time += " " + mTaskDate.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH);
-            timeButton.setText(time);
-        }
     }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
+    public static class DatePickerFragment extends DialogFragment {
 
         @NonNull
         @Override
@@ -167,18 +189,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            mTaskDate.set(year, month, day);
-            String date = mTaskDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
-            date += " " + String.valueOf(day);
-            date += ", " + String.valueOf(year);
-            dateButton.setText(date);
-
-            //TODO: show time picker automatically after date set
+            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
         }
     }
 }

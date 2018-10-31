@@ -1,11 +1,13 @@
-package com.kopsa.countdowns;
+package com.kopsa.countdowns.models;
+
+import com.kopsa.countdowns.util.Utilities;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * Created by kkopsa on 5/27/16.
  */
+
 public class Task implements Comparable<Task> {
     private String mDescription;
     private Calendar mDueDate;
@@ -15,8 +17,7 @@ public class Task implements Comparable<Task> {
 
         if (dueDate != null) {
             this.mDueDate = dueDate;
-        }
-        else {
+        } else {
             this.mDueDate = Calendar.getInstance();
         }
     }
@@ -40,20 +41,18 @@ public class Task implements Comparable<Task> {
         return mDescription;
     }
 
-    public Calendar getDueDate() { return mDueDate; }
+    public Calendar getDueDate() {
+        return mDueDate;
+    }
 
     public String getDueDateAsString() {
-        String dueDate = new String();
+        return Utilities.getCalendarAsString(mDueDate);
+    }
 
-        Locale locale = Locale.getDefault();
-
-        dueDate += mDueDate.getDisplayName(Calendar.MONTH, Calendar.LONG, locale);
-        dueDate += ", " + mDueDate.get(Calendar.DAY_OF_MONTH);
-        dueDate += " " + mDueDate.get(Calendar.YEAR);
-        dueDate += ", " + mDueDate.get(Calendar.HOUR);
-        dueDate += ":" + mDueDate.get(Calendar.MINUTE);
-
-        return dueDate;
+    public long getTimeRemaining() {
+        long timeRemaining = 0;
+        timeRemaining = mDueDate.getTimeInMillis() - System.currentTimeMillis();
+        return timeRemaining;
     }
 
     @Override
@@ -62,5 +61,13 @@ public class Task implements Comparable<Task> {
             return 1;
         else
             return -1;
+    }
+
+    public String getFormattedTimeRemaining() {
+        String formattedTimeRemaining = new String();
+
+        formattedTimeRemaining += this.getTimeRemaining();
+
+        return formattedTimeRemaining;
     }
 }
